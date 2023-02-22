@@ -35,56 +35,49 @@ class _HeaderIcon extends StatelessWidget {
     );
   }
 }
-
 class _PurpleBox extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
     final size = MediaQuery.of(context).size;
+
     return Container(
       width: double.infinity,
-      height: size.height,
-      transform: Matrix4.identity()..rotateZ(-30 * 3.1415927 / 180),
+      height: size.height * 0.4,
       decoration: _purpleBackground(),
       child: Stack(
-        children: const [
-          Positioned(top: 90, left: 30, child: _Triangle(angulo: 100)),
-          Positioned(top: 200, left: 190, child: _Triangle(angulo: 51)),
-          Positioned(top: 600, left: 100, child: _Triangle(angulo: 53)),
-          Positioned(bottom: -50, left: 10, child: _Triangle(angulo: 30)),
+        children: [
+          Positioned(child: _Bubble(), top: 90, left: 30 ),
+          Positioned(child: _Bubble(), top: -40, left: -30 ),
+          Positioned(child: _Bubble(), top: -50, right: -20 ),
+          Positioned(child: _Bubble(), bottom: -50, left: 10 ),
+          Positioned(child: _Bubble(), bottom: 120, right: 20 ),
         ],
       ),
     );
   }
 
   BoxDecoration _purpleBackground() => BoxDecoration(
-      gradient: LinearGradient(colors: [Colors.blueGrey, Colors.blueAccent]));
+    gradient: LinearGradient(
+      colors: [
+        Color.fromRGBO(63, 63, 156, 1),
+        Color.fromRGBO(90, 70, 178, 1)
+      ]
+    )
+  );
 }
-
-class _Triangle extends StatelessWidget {
-  final double angulo;
-  const _Triangle({super.key, required this.angulo});
+class _Bubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        transform: Matrix4.identity()..rotateZ(angulo),
-        child: CustomPaint(size: Size(100, 100), painter: DrawTriangle()));
-  }
-}
-
-class DrawTriangle extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    var path = Path();
-    path.moveTo(size.width / 2, 0);
-    path.lineTo(0, size.height);
-    path.lineTo(size.height, size.width);
-    path.close();
-    canvas.drawPath(path, Paint()..color = Color.fromRGBO(255, 255, 255, 0.05));
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+      width: 100,
+      height: 100,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(100),
+        color: Color.fromRGBO(255, 255, 255, 0.05)
+      ),
+    );
   }
 }

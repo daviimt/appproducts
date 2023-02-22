@@ -74,7 +74,7 @@ class _LoginForm extends StatelessWidget {
                     : 'El valor ingresado no luce como un correo';
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             TextFormField(
               autocorrect: false,
               obscureText: true,
@@ -91,7 +91,7 @@ class _LoginForm extends StatelessWidget {
                     : 'La contraseña debe de ser de 6 caracteres';
               },
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)),
