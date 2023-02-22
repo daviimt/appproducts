@@ -119,19 +119,19 @@ class _LoginForm extends StatelessWidget {
                         final String? data = await authService.login(
                             loginForm.email, loginForm.password);
                         final spliter = data?.split(',');
-
-                        if (data == null) {
+                        print(data);
+                        if (data != null) {
                           if (spliter?[0] == 'ROLE_ADMIN') {
                             Navigator.pushReplacementNamed(
-                                context, 'adminScreen');
+                                context, 'adminscreen');
                           } else {
                             Navigator.pushReplacementNamed(
-                                context, 'userScreen');
+                                context, 'userscreen');
                           }
                         } else {
                           // TODO: mostrar error en pantalla
                           // print( errorMessage );
-                          NotificationsService.showSnackbar(data);
+                          NotificationsService.showSnackbar(data!);
                           loginForm.isLoading = false;
                         }
                       })
