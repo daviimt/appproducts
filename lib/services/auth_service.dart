@@ -16,19 +16,37 @@ class AuthService extends ChangeNotifier {
     return await storage.read(key: 'id') ?? '';
   }
 
-  Future<String?> login(String email, String password) async {
-    final Map<String, dynamic> authData = {'user': email, 'password': password};
-    print(authData);
+  Future<String?> login(String user, String password) async {
+    final Map<String, dynamic> authData = {'user': user, 'password': password};
+
     final url = Uri.http(_baseUrl, '/login', {});
-    print(url);
-    final resp = await http.post(url, headers: {}, body: json.encode(authData));
-    print(resp);
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(decodedResp);
-    if (decodedResp['id'] != null) {
+
+    var request = http.MultipartRequest(
+        'POST', Uri.parse('http://192.168.1.28:8080/login'));
+
+    request.fields['user'] = user;
+    request.fields['password'] = password;
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      String values = "";
+      await response.stream.transform(utf8.decoder).listen((value) {
+        values = value;
+      });
+
+      final Map<String, dynamic> decodedResp = json.decode(values);
+      print(decodedResp);
+
       await storage.write(key: 'token', value: decodedResp['token']);
       await storage.write(key: 'id', value: decodedResp['id'].toString());
-      return decodedResp['role'] + ',' + decodedResp['listFavs'];
+      return decodedResp['role'] +
+          ',' +
+          response.statusCode.toString() +
+          ',' +
+          decodedResp['enabled'].toString();
+    } else {
+      return '' + ',' + response.statusCode.toString();
     }
   }
 

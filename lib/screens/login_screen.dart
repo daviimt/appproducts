@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'package:provider/provider.dart';
 
@@ -118,26 +119,44 @@ class _LoginForm extends StatelessWidget {
                         // TODO: validar si el login es correcto
                         final String? data = await authService.login(
                             loginForm.username, loginForm.password);
+
                         final spliter = data?.split(',');
-                        print(data);
-                        if (data != null) {
-                          if (spliter?[0] == 'ROLE_ADMIN') {
-                            Navigator.pushReplacementNamed(
-                                context, 'adminscreen');
+                        print(spliter?[1]);
+
+                        if (spliter?[1] == '200') {
+                          if (spliter?[2] == 'false') {
+                            customToast('The user is not enabled', context);
                           } else {
-                            Navigator.pushReplacementNamed(
-                                context, 'userscreen');
+                            if (spliter?[0] == 'ROLE_ADMIN') {
+                              Navigator.pushReplacementNamed(
+                                  context, 'adminscreen');
+                            } else {
+                              Navigator.pushReplacementNamed(
+                                  context, 'userscreen');
+                            }
                           }
                         } else {
-                          // TODO: mostrar error en pantalla
-                          // print( errorMessage );
-                          NotificationsService.showSnackbar(data!);
-                          loginForm.isLoading = false;
+                          customToast('Email or password incorrect', context);
+                          Navigator.pushReplacementNamed(context, 'login');
                         }
                       })
           ],
         ),
       ),
+    );
+  }
+
+  void customToast(String s, BuildContext context) {
+    showToast(
+      s,
+      context: context,
+      animation: StyledToastAnimation.scale,
+      reverseAnimation: StyledToastAnimation.fade,
+      position: StyledToastPosition.top,
+      animDuration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 4),
+      curve: Curves.elasticOut,
+      reverseCurve: Curves.linear,
     );
   }
 }
