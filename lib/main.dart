@@ -36,8 +36,6 @@ class MyApp extends StatelessWidget {
         routes: {
           'login': (_) => LoginScreen(),
           // 'register': (_) => RegisterScreen(),
-        },
-        theme: ThemeData.light()
-            .copyWith(scaffoldBackgroundColor: Colors.teal[200]));
+        });
   }
 }

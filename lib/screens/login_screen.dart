@@ -62,7 +62,7 @@ class _LoginForm extends StatelessWidget {
               decoration: InputDecorations.authInputDecoration(
                   labelText: 'Correo electrónico',
                   prefixIcon: Icons.alternate_email_rounded,
-                  hinText: 'john.doe@gmail.com'),
+                  hintText: 'john.doe@gmail.com'),
               onChanged: (value) => loginForm.email = value,
               validator: (value) {
                 String pattern =
@@ -82,7 +82,7 @@ class _LoginForm extends StatelessWidget {
               decoration: InputDecorations.authInputDecoration(
                 labelText: 'Contraseña',
                 prefixIcon: Icons.lock_outline,
-                hinText: '*****',
+                hintText: '*****',
               ),
               onChanged: (value) => loginForm.password = value,
               validator: (value) {
