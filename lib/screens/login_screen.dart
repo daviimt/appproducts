@@ -63,7 +63,7 @@ class _LoginForm extends StatelessWidget {
                   labelText: 'Correo electrónico',
                   prefixIcon: Icons.alternate_email_rounded,
                   hintText: 'john.doe@gmail.com'),
-              onChanged: (value) => loginForm.email = value,
+              onChanged: (value) => loginForm.username = value,
               validator: (value) {
                 String pattern =
                     r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
@@ -117,7 +117,7 @@ class _LoginForm extends StatelessWidget {
 
                         // TODO: validar si el login es correcto
                         final String? data = await authService.login(
-                            loginForm.email, loginForm.password);
+                            loginForm.username, loginForm.password);
                         final spliter = data?.split(',');
                         print(data);
                         if (data != null) {
