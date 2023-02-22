@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class RegisterService extends ChangeNotifier {
-  final String _baseUrl = 'localhost:8080/api/';
+  final String _baseUrl = 'localhost:8080/';
 
   Future<String?> register(String username, String password) async {
     final Map<String, dynamic> authData = {
