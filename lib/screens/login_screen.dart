@@ -120,7 +120,7 @@ class _LoginForm extends StatelessWidget {
                             if (spliter?[0] == 'ROLE_ADMIN') {
                               Navigator.pushReplacementNamed(
                                   context, 'adminscreen');
-                              print(categoryService.getCategories().toString());
+                                  categoryService.updateCategory('2','maricon','maricon el nacho');
                             } else {
                               Navigator.pushReplacementNamed(
                                   context, 'userscreen');
