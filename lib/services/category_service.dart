@@ -87,6 +87,37 @@ class CategoryService extends ChangeNotifier {
 
     print(resp.statusCode);
 
+    if (resp.statusCode == 200) {}
+  }
+
+  Future createCategory(String name, String description) async {
+    String? token = await AuthService().readToken();
+    print(name);
+    print(description);
+
+    isLoading = true;
+    notifyListeners();
+
+    // ignore: unused_local_variable
+
+    final Map<String, dynamic> authData = {
+      'name': name,
+      'description': description,
+    };
+
+    final encodedFormData = utf8.encode(json.encode(authData));
+    final url = Uri.http(_baseUrl, '/api/admin/categories');
+
+    final resp = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
+        },
+        body: encodedFormData);
+
+    print(resp.statusCode);
+
     if (resp.statusCode == 200) {
       print('FUNSIONA PERRO');
     }
