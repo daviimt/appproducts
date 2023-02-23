@@ -122,4 +122,24 @@ class CategoryService extends ChangeNotifier {
       print('FUNSIONA PERRO');
     }
   }
+
+  getCategory(String id) async {
+    String? token = await AuthService().readToken();
+
+    final url = Uri.http(_baseUrl, '/api/admin/categories/$id');
+
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+
+    Category category = Category.fromJson(decodedResp);
+
+    isLoading = false;
+    notifyListeners();
+    return category;
+  }
 }
