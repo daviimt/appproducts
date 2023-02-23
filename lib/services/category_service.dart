@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class CategoryService extends ChangeNotifier {
-  final String _baseUrl = '192.168.244.99:8080';
+  final String _baseUrl = '192.168.1.28:8080';
   bool isLoading = true;
   List<Category> categorias = [];
   String categoria = "";
@@ -69,21 +69,26 @@ class CategoryService extends ChangeNotifier {
 
     // ignore: unused_local_variable
 
-    var request = http.MultipartRequest('PUT',
-        Uri.parse('http://192.168.244.99:8080/api/admin/categories/$id'));
+    final Map<String, dynamic> authData = {
+      'name': name,
+      'description': description,
+    };
 
-    request.fields['name'] = name;
-    request.fields['description'] = description;
-    request.headers.addAll({"Accept":"application/json","Authorization": "Bearer $token"});
+    final encodedFormData = utf8.encode(json.encode(authData));
+    final url = Uri.http(_baseUrl, '/api/admin/categories/$id');
 
-    var response = await request.send();
-    print(response.statusCode);
+    final resp = await http.put(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: encodedFormData);
 
-    if (response.statusCode == 200) {
-      // String values = "";
-      // await response.stream.transform(utf8.decoder).listen((value) {
-      //   values = value;
-      // });
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+
+    print(resp.statusCode);
+
+    if (resp.statusCode == 200) {
       print('FUNSIONA PERRO');
     }
   }
