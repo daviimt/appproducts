@@ -1,3 +1,2 @@
 export 'package:appproducts/services/notifications_service.dart';
 export 'package:appproducts/services/auth_service.dart';
-export 'package:appproducts/services/register_service.dart';

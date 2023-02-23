@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
-  final String _baseUrl = '10.10.1.22:8080';
+  final String _baseUrl = '192.168.244.99:8080';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
 
@@ -16,13 +16,44 @@ class AuthService extends ChangeNotifier {
     return await storage.read(key: 'id') ?? '';
   }
 
+//REGISTER
+Future<String?> register(
+    String username,
+    String password,
+    
+  ) async {
+    final Map<String, dynamic> authData = {
+      'username': username,
+      'password': password,
+    };
+
+    final encodedFormData = utf8.encode(json.encode(authData));
+    final url = Uri.http(_baseUrl, '/register');
+
+    final resp = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: encodedFormData);
+
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+    if (resp.statusCode == 200) {
+      await storage.write(key: 'token', value: decodedResp['token']);
+      await storage.write(key: 'id', value: decodedResp['id'].toString());
+
+      return (resp.statusCode.toString());
+    } else {
+      print('Error al enviar la solicitud');
+      return (resp.statusCode.toString());
+    }
+  }
+//LOGINS
   Future<String?> login(String user, String password) async {
     final Map<String, dynamic> authData = {'user': user, 'password': password};
 
-    final url = Uri.http(_baseUrl, '/login', {});
-
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://10.10.1.22:8080/login'));
+        'POST', Uri.parse('http://192.168.244.99:8080/login'));
 
     request.fields['user'] = user;
     request.fields['password'] = password;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:provider/provider.dart';
 import '../providers/providers.dart';
 import '../services/services.dart';
@@ -62,15 +63,7 @@ class _LoginForm extends StatelessWidget {
                   labelText: 'Correo electrónico',
                   prefixIcon: Icons.alternate_email_rounded),
               onChanged: (value) => loginForm.username = value,
-              validator: (value) {
-                String pattern =
-                    r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
-                RegExp regExp = new RegExp(pattern);
-
-                return regExp.hasMatch(value ?? '')
-                    ? null
-                    : 'El valor ingresado no luce como un correo';
-              },
+              
             ),
             SizedBox(height: 30),
             TextFormField(
@@ -82,11 +75,7 @@ class _LoginForm extends StatelessWidget {
                   labelText: 'Contraseña',
                   prefixIcon: Icons.lock_outline),
               onChanged: (value) => loginForm.password = value,
-              validator: (value) {
-                return (value != null && value.length >= 6)
-                    ? null
-                    : 'La contraseña debe de ser de 6 caracteres';
-              },
+              
             ),
             SizedBox(height: 30),
             MaterialButton(
@@ -105,7 +94,7 @@ class _LoginForm extends StatelessWidget {
                     ? null
                     : () async {
                         FocusScope.of(context).unfocus();
-                        final authService = Provider.of<RegisterService>(
+                        final authService = Provider.of<AuthService>(
                             context,
                             listen: false);
 
@@ -117,10 +106,12 @@ class _LoginForm extends StatelessWidget {
                         final String? errorMessage = await authService.register(
                             loginForm.username, loginForm.password);
 
-                        if (errorMessage == null) {
+                        if (errorMessage == '200') {
+                          customToast('Registrado jefe', context);
                           Navigator.pushReplacementNamed(context, 'login');
                         } else {
                           // TODO: mostrar error en pantalla
+                          customToast('Usuario ya registrado', context);
                           print(errorMessage);
                           loginForm.isLoading = false;
                         }
@@ -128,6 +119,19 @@ class _LoginForm extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+  void customToast(String s, BuildContext context) {
+    showToast(
+      s,
+      context: context,
+      animation: StyledToastAnimation.scale,
+      reverseAnimation: StyledToastAnimation.fade,
+      position: StyledToastPosition.top,
+      animDuration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 4),
+      curve: Curves.elasticOut,
+      reverseCurve: Curves.linear,
     );
   }
 }
