@@ -80,11 +80,10 @@ class CategoryService extends ChangeNotifier {
     final resp = await http.put(url,
         headers: {
           'Content-Type': 'application/json',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          "Authorization": "Bearer $token"
         },
         body: encodedFormData);
-
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
 
     print(resp.statusCode);
 
