@@ -61,9 +61,9 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icons.alternate_email_rounded,
-                  hintText: 'john.doe@gmail.com'),
+                  labelText: 'Usuario',
+                  prefixIcon: Icons.account_circle_sharp,
+                  hintText: 'nombre_usuario'),
               onChanged: (value) => loginForm.username = value,
             ),
             const SizedBox(height: 30),
@@ -111,7 +111,7 @@ class _LoginForm extends StatelessWidget {
 
                         if (spliter?[1] == '200') {
                           if (spliter?[2] == 'false') {
-                            customToast('The user is not enabled', context);
+                            customToast('El usuario no está activo', context);
                           } else {
                             if (spliter?[0] == 'ROLE_ADMIN') {
                               Navigator.pushReplacementNamed(
@@ -122,7 +122,8 @@ class _LoginForm extends StatelessWidget {
                             }
                           }
                         } else {
-                          customToast('Email or password incorrect', context);
+                          customToast(
+                              'Usuario o contraseña incorrecta', context);
                           Navigator.pushReplacementNamed(context, 'login');
                         }
                       })
