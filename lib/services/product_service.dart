@@ -64,4 +64,38 @@ class ProductService extends ChangeNotifier {
 
     if (resp.statusCode == 200) {}
   }
+
+  Future<List> getListProducts() async {
+    print("Entrando");
+    productos.clear();
+    isLoading = true;
+    notifyListeners();
+    final url = Uri.http(_baseUrl, '/api/all/products');
+    String? token = await AuthService().readToken();
+    print(token);
+
+    final resp = await http.get(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    print("Resp " + resp.body);
+    final List<dynamic> decodedResp = json.decode(resp.body);
+    List<Product> categoryList = decodedResp
+        .map((e) => Product(
+              id: e['id'],
+              name: e['name'],
+              description: e['description'],
+              idCategory: e['idCategory'],
+              price: e['price'],
+            ))
+        .toList();
+    print(categoryList);
+    productos = categoryList;
+
+    // var catalog = ProductModel.fromJson(decodedResp);
+    // print(catalog);
+    isLoading = false;
+    notifyListeners();
+    return categoryList;
+  }
 }
