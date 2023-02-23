@@ -13,13 +13,12 @@ import 'services.dart';
 class CategoryService extends ChangeNotifier {
   final String _baseUrl = '192.168.244.99:8080';
   bool isLoading = true;
-  final List<User> usuarios = [];
-  String usuario = "";
+  final List<Category> categorias = [];
+  String categoria = "";
   final storage = const FlutterSecureStorage();
 
   getCategories() async {
     String? token = await AuthService().readToken();
-    String? id = await AuthService().readId();
 
     final url = Uri.http(_baseUrl, '/api/all/categories');
     print(url);
@@ -29,13 +28,12 @@ class CategoryService extends ChangeNotifier {
       url,
       headers: {"Authorization": "Bearer $token"},
     );
-    final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print(resp.body);
-
-    await storage.write(
-        key: 'company_id', value: decodedResp['data']['company_id'].toString());
+    final List<dynamic> decodedResp = json.decode(resp.body);
+    print("DECODED RESP");
+    print(decodedResp);
+    
     isLoading = false;
     notifyListeners();
-    return decodedResp['data']['company_id'].toString();
+    return null;
   }
 }

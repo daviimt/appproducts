@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class UserService extends ChangeNotifier {
-  final String _baseUrl = 'semillero.allsites.es';
+  final String _baseUrl = '192.168.244.99:8080';
   bool isLoading = true;
   final List<User> usuarios = [];
   String usuario = "";
