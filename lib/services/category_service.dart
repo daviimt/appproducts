@@ -11,13 +11,13 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class CategoryService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.40:8080';
+  final String _baseUrl = '192.168.1.28:8080';
   bool isLoading = true;
   List<Category> categorias = [];
   String categoria = "";
   final storage = const FlutterSecureStorage();
 
-  getCategories() async {
+  Future<List> getCategories() async {
     String? token = await AuthService().readToken();
 
     final url = Uri.http(_baseUrl, '/api/all/categories');
@@ -81,7 +81,6 @@ class CategoryService extends ChangeNotifier {
           "Authorization": "Bearer $token"
         },
         body: encodedFormData);
-
   }
 
   Future createCategory(String name, String description) async {
