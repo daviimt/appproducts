@@ -134,7 +134,7 @@ class _LoginForm extends StatelessWidget {
       fullWidth: true,
       toastHorizontalMargin: 25,
       borderRadius: BorderRadius.circular(15),
-      backgroundColor: Colors.blueGrey[500],
+      backgroundColor: Colors.deepPurple,
       alignment: Alignment.topCenter,
       position: StyledToastPosition.bottom,
       duration: const Duration(seconds: 3),
