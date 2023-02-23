@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class UserService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.40:8080';
   bool isLoading = true;
   final List<User> usuarios = [];
   String usuario = "";
@@ -40,7 +40,6 @@ class UserService extends ChangeNotifier {
     return decodedResp['data']['company_id'].toString();
   }
 
-  // ignore: non_constant_identifier_names
   readCompany_id() async {
     return await storage.read(key: 'company_id') ?? '';
   }
@@ -50,7 +49,6 @@ class UserService extends ChangeNotifier {
     String? token = await AuthService().readToken();
     isLoading = true;
     notifyListeners();
-    // ignore: unused_local_variable
     final resp = await http.post(
       url,
       headers: {
@@ -66,7 +64,6 @@ class UserService extends ChangeNotifier {
     String? token = await AuthService().readToken();
     isLoading = true;
     notifyListeners();
-    // ignore: unused_local_variable
     final resp = await http.post(
       url,
       headers: {
@@ -82,7 +79,6 @@ class UserService extends ChangeNotifier {
     String? token = await AuthService().readToken();
     isLoading = true;
     notifyListeners();
-    // ignore: unused_local_variable
     final resp = await http.post(
       url,
       headers: {

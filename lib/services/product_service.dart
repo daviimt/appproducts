@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.40:8080';
   bool isLoading = true;
   List<Product> productos = [];
   String producto = "";
@@ -60,9 +60,6 @@ class ProductService extends ChangeNotifier {
       headers: {"Authorization": "Bearer $token"},
     );
 
-    print(resp.statusCode);
-
-    if (resp.statusCode == 200) {}
   }
 
   Future<List> getListProducts() async {
@@ -72,13 +69,11 @@ class ProductService extends ChangeNotifier {
     notifyListeners();
     final url = Uri.http(_baseUrl, '/api/all/products');
     String? token = await AuthService().readToken();
-    print(token);
 
     final resp = await http.get(
       url,
       headers: {"Authorization": "Bearer $token"},
     );
-    print("Resp " + resp.body);
     final List<dynamic> decodedResp = json.decode(resp.body);
     List<Product> categoryList = decodedResp
         .map((e) => Product(
@@ -89,11 +84,8 @@ class ProductService extends ChangeNotifier {
               price: e['price'],
             ))
         .toList();
-    print(categoryList);
     productos = categoryList;
 
-    // var catalog = ProductModel.fromJson(decodedResp);
-    // print(catalog);
     isLoading = false;
     notifyListeners();
     return categoryList;

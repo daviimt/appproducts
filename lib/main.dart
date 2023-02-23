@@ -1,10 +1,7 @@
 import 'package:appproducts/services/user_service.dart';
 import 'package:flutter/material.dart';
-
 import 'screens/screens.dart';
-
 import 'package:provider/provider.dart';
-
 import 'services/services.dart';
 
 void main() => runApp(AppState());
@@ -48,7 +45,6 @@ class MyApp extends StatelessWidget {
           'register': (_) => RegisterScreen(),
           'userscreen': (_) => UserScreen(),
           'adminscreen': (_) => AdminScreen(),
-          // 'register': (_) => RegisterScreen(),
         });
   }
 }

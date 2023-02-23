@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class CategoryService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.40:8080';
   bool isLoading = true;
   List<Category> categorias = [];
   String categoria = "";
@@ -51,7 +51,6 @@ class CategoryService extends ChangeNotifier {
     print(url);
     isLoading = true;
     notifyListeners();
-    // ignore: unused_local_variable
     final resp = await http.delete(
       url,
       headers: {"Authorization": "Bearer $token"},
@@ -66,8 +65,6 @@ class CategoryService extends ChangeNotifier {
 
     isLoading = true;
     notifyListeners();
-
-    // ignore: unused_local_variable
 
     final Map<String, dynamic> authData = {
       'name': name,
@@ -85,20 +82,13 @@ class CategoryService extends ChangeNotifier {
         },
         body: encodedFormData);
 
-    print(resp.statusCode);
-
-    if (resp.statusCode == 200) {}
   }
 
   Future createCategory(String name, String description) async {
     String? token = await AuthService().readToken();
-    print(name);
-    print(description);
 
     isLoading = true;
     notifyListeners();
-
-    // ignore: unused_local_variable
 
     final Map<String, dynamic> authData = {
       'name': name,
@@ -115,12 +105,6 @@ class CategoryService extends ChangeNotifier {
           "Authorization": "Bearer $token"
         },
         body: encodedFormData);
-
-    print(resp.statusCode);
-
-    if (resp.statusCode == 200) {
-      print('FUNSIONA PERRO');
-    }
   }
 
   getCategory(String id) async {
