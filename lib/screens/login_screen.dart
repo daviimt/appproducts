@@ -122,8 +122,6 @@ class _LoginForm extends StatelessWidget {
                             } else {
                               Navigator.pushReplacementNamed(
                                   context, 'userscreen');
-                              print('productos');
-                              productService.getProductsfilter('1');
                             }
                           }
                         } else {

@@ -46,4 +46,22 @@ class ProductService extends ChangeNotifier {
     notifyListeners();
     return productos;
   }
+
+  Future addFav(String id) async {
+    String? token = await AuthService().readToken();
+
+    isLoading = true;
+    notifyListeners();
+
+    final url = Uri.http(_baseUrl, '/api/user/addFav/$id');
+
+    final resp = await http.post(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+
+    print(resp.statusCode);
+
+    if (resp.statusCode == 200) {}
+  }
 }
