@@ -59,9 +59,9 @@ class _LoginForm extends StatelessWidget {
               autocorrect: false,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecorations.authInputDecoration(
-                  hintText: 'john.doe@gmail.com',
-                  labelText: 'Correo electrónico',
-                  prefixIcon: Icons.alternate_email_rounded),
+                  hintText: 'nombre_usuario',
+                  labelText: 'Usuario',
+                  prefixIcon: Icons.account_circle_sharp),
               onChanged: (value) => loginForm.username = value,
               
             ),
@@ -121,17 +121,25 @@ class _LoginForm extends StatelessWidget {
       ),
     );
   }
-  void customToast(String s, BuildContext context) {
+  void customToast(String message, BuildContext context) {
     showToast(
-      s,
+      message,
+      textStyle: const TextStyle(
+        fontSize: 14,
+        wordSpacing: 0.1,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+      ),
+      textPadding: const EdgeInsets.all(23),
+      fullWidth: true,
+      toastHorizontalMargin: 25,
+      borderRadius: BorderRadius.circular(15),
+      backgroundColor: Colors.blueGrey[500],
+      alignment: Alignment.topCenter,
+      position: StyledToastPosition.bottom,
+      duration: const Duration(seconds: 3),
+      animation: StyledToastAnimation.slideFromBottom,
       context: context,
-      animation: StyledToastAnimation.scale,
-      reverseAnimation: StyledToastAnimation.fade,
-      position: StyledToastPosition.top,
-      animDuration: const Duration(seconds: 1),
-      duration: const Duration(seconds: 4),
-      curve: Curves.elasticOut,
-      reverseCurve: Curves.linear,
     );
   }
 }
