@@ -1,3 +1,4 @@
+import 'package:appproducts/services/category_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
@@ -21,7 +22,8 @@ class LoginScreen extends StatelessWidget {
               child: Column(
             children: [
               SizedBox(height: 10),
-              Text('Iniciar sesión', style: Theme.of(context).textTheme.headline4),
+              Text('Iniciar sesión',
+                  style: Theme.of(context).textTheme.headline4),
               SizedBox(height: 30),
               ChangeNotifierProvider(
                   create: (_) => LoginFormProvider(), child: _LoginForm())
@@ -97,7 +99,9 @@ class _LoginForm extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                         final authService =
                             Provider.of<AuthService>(context, listen: false);
-
+                        final categoryService = Provider.of<CategoryService>(
+                            context,
+                            listen: false);
                         if (!loginForm.isValidForm()) return;
 
                         loginForm.isLoading = true;
@@ -116,6 +120,7 @@ class _LoginForm extends StatelessWidget {
                             if (spliter?[0] == 'ROLE_ADMIN') {
                               Navigator.pushReplacementNamed(
                                   context, 'adminscreen');
+                              print(categoryService.getCategories().toString());
                             } else {
                               Navigator.pushReplacementNamed(
                                   context, 'userscreen');

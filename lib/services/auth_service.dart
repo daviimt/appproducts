@@ -17,10 +17,9 @@ class AuthService extends ChangeNotifier {
   }
 
 //REGISTER
-Future<String?> register(
+  Future<String?> register(
     String username,
     String password,
-    
   ) async {
     final Map<String, dynamic> authData = {
       'username': username,
@@ -48,6 +47,7 @@ Future<String?> register(
       return (resp.statusCode.toString());
     }
   }
+
 //LOGINS
   Future<String?> login(String user, String password) async {
     final Map<String, dynamic> authData = {'user': user, 'password': password};

@@ -1,3 +1,4 @@
+import 'package:appproducts/services/user_service.dart';
 import 'package:flutter/material.dart';
 
 import 'screens/screens.dart';
@@ -17,6 +18,12 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => UserService(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => CategoryService(),
         ),
       ],
       child: MyApp(),
