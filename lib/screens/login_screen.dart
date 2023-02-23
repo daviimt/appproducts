@@ -99,9 +99,8 @@ class _LoginForm extends StatelessWidget {
                         FocusScope.of(context).unfocus();
                         final authService =
                             Provider.of<AuthService>(context, listen: false);
-                        final categoryService = Provider.of<CategoryService>(
-                            context,
-                            listen: false);
+                        final productService =
+                            Provider.of<ProductService>(context, listen: false);
                         if (!loginForm.isValidForm()) return;
 
                         loginForm.isLoading = true;
@@ -120,10 +119,11 @@ class _LoginForm extends StatelessWidget {
                             if (spliter?[0] == 'ROLE_ADMIN') {
                               Navigator.pushReplacementNamed(
                                   context, 'adminscreen');
-                              categoryService.getCategory('2');
                             } else {
                               Navigator.pushReplacementNamed(
                                   context, 'userscreen');
+                              print('productos');
+                              productService.getProductsfilter('1');
                             }
                           }
                         } else {

@@ -25,6 +25,9 @@ class AppState extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => CategoryService(),
         ),
+        ChangeNotifierProvider(
+          create: (_) => ProductService(),
+        ),
       ],
       child: MyApp(),
     );

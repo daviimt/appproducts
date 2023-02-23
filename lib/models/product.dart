@@ -1,8 +1,8 @@
-class Product{
+class Product {
   int? id;
   String? name;
   String? description;
-  int? price;
+  double? price;
   int? idCategory;
 
   Product({this.id, this.name, this.description, this.price, this.idCategory});
