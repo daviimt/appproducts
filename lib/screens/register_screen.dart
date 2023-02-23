@@ -109,11 +109,13 @@ class _LoginForm extends StatelessWidget {
                         if (errorMessage == '200') {
                           customToast('Registrado jefe', context);
                           Navigator.pushReplacementNamed(context, 'login');
-                        } else {
+                        } else if (errorMessage == '500')  {
                           // TODO: mostrar error en pantalla
                           customToast('Usuario ya registrado', context);
-                          print(errorMessage);
+            
                           loginForm.isLoading = false;
+                        } else{
+                          customToast('Error de servidor', context);
                         }
                       })
           ],
