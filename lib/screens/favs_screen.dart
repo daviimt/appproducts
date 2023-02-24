@@ -13,16 +13,19 @@ class FavsScreen extends StatefulWidget {
 
 class _FavsScreenState extends State<FavsScreen> {
   final authService = AuthService();
+  final productService = ProductService();
   List<dynamic> favs = [];
   List<Product> products = [];
   Future refresh() async {
-    setState((){ favs.clear();
-     products.clear();
+    setState(() {
+      favs.clear();
+      products.clear();
     });
     setState(() {
       favs = Provider.of<AuthService>(context, listen: false).Favs;
       for (var i in favs) {
-        products.add(ProductService().getProduct(i.toString()));
+        print(productService.p.id);
+        products.add(productService.p);
       }
     });
   }
@@ -32,32 +35,31 @@ class _FavsScreenState extends State<FavsScreen> {
     super.initState();
     refresh();
   }
-@override
-Widget build(BuildContext context) {
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar( 
-        title: const Text('Lista de Favoritos')),
+      appBar: AppBar(title: const Text('Lista de Favoritos')),
       //Sombra debajo del appbar
-     body: ListView.separated(
+      body: ListView.separated(
         itemCount: products.length,
         itemBuilder: (context, index) => ListTile(
-          leading: const Icon(
-          Icons.favorite,
-          size: 50,
-          ),
-          contentPadding: const EdgeInsets.all(16),
-          title: Text(products[index].name!),
-          subtitle: Text(products[index].description!)
-          ),
-          separatorBuilder: (_, __) => const Divider(),
+            leading: const Icon(
+              Icons.favorite,
+              size: 50,
             ),
+            contentPadding: const EdgeInsets.all(16),
+            title: Text(products[index].name!),
+            subtitle: Text(products[index].description!)),
+        separatorBuilder: (_, __) => const Divider(),
+      ),
     );
   }
 
   // @override
   // Widget build(BuildContext context) {
   //   final authService = Provider.of<AuthService>(context, listen: false);
-   
+
   //   return Scaffold(
   //       appBar: AppBar(
   //         title: const Text('Lista de usuarios: '),
@@ -191,7 +193,7 @@ Widget build(BuildContext context) {
   //                               );
   //                               /*deleteService.delete(user.id.toString());
   //                   user.deleted=1;
-  //                   final msg = deleteService.mensaje; 
+  //                   final msg = deleteService.mensaje;
   //                   Navigator.pushReplacementNamed(context, 'admin');*/
   //                             },
   //                             backgroundColor: Color(0xFFFE4A49),

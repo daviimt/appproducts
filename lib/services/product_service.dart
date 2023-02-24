@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.41:8080';
+  final String _baseUrl = '192.168.1.28:8080';
   bool isLoading = true;
   List<Product> productos = [];
   String producto = "";
+  Product p = Product();
   final storage = const FlutterSecureStorage();
 
   getProductsfilter(String id) async {
@@ -88,10 +89,10 @@ class ProductService extends ChangeNotifier {
     return categoryList;
   }
 
-  getProduct(String id) async {
+  Future<Product> getProduct(String id) async {
     String? token = await AuthService().readToken();
 
-    final url = Uri.http(_baseUrl, '/api/admin/products/$id');
+    final url = Uri.http(_baseUrl, '/api/all/products/$id');
 
     isLoading = true;
     notifyListeners();
@@ -101,8 +102,14 @@ class ProductService extends ChangeNotifier {
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
 
-    Product product = Product.fromJson(decodedResp);
-    
+    Product product = Product(
+      id: decodedResp['id'],
+      name: decodedResp['name'],
+      description: decodedResp['description'],
+      idCategory: decodedResp['idCategory'],
+      price: decodedResp['price'],
+    );
+    p = product;
     isLoading = false;
     notifyListeners();
     return product;
