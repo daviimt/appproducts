@@ -186,7 +186,10 @@ class _UserFormState extends State<_UserForm> {
                               setState(() {
                                 isChecked[index] = value!;
                                 if (isChecked[index]) {
-                                  getProducts(products[index].id.toString());
+                                  productService
+                                      .addFav(products[index].id.toString());
+                                  getAllProducts();
+                                  getListFav();
                                 }
                               });
                             },
