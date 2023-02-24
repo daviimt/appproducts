@@ -185,7 +185,7 @@ class _UserFormState extends State<_UserForm> {
                             onChanged: (bool? value) {
                               setState(() {
                                 isChecked[index] = value!;
-                                if (!isChecked[index]) {
+                                if (isChecked[index]) {
                                   getProducts(products[index].id.toString());
                                 }
                               });
