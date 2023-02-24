@@ -59,7 +59,7 @@ class _UserFormState extends State<_UserForm> {
   List<Product> products = [];
   List<Category> categories = [];
   List<bool> isChecked = [];
-  List<int> listFavs = [];
+  List<dynamic> listFavs = [];
 
   final categoryService = CategoryService();
   final authService = AuthService();
@@ -76,21 +76,16 @@ class _UserFormState extends State<_UserForm> {
   }
 
   Future<void> getListFav() async {
-    Future<dynamic> futureData = authService.readListFav();
-    List<int> intList = await futureData.then((data) {
-      List<int> resultList = List<int>.from(data);
-      return resultList;
-    });
     setState(() {
-      listFavs = intList;
-      print(intList);
+      listFavs = Provider.of<AuthService>(context, listen: false).Favs;
+      print('AQUI ESTOY');
+      print(listFavs);
     });
   }
 
   Future getAllProducts() async {
     products.clear();
     await productService.getListProducts();
-    print(products);
     setState(() {
       products = productService.productos;
       isChecked = List<bool>.filled(products.length, false);
@@ -110,8 +105,6 @@ class _UserFormState extends State<_UserForm> {
     final categoryService = Provider.of<CategoryService>(context);
     final productService = Provider.of<ProductService>(context);
 
-    print(products);
-
     getProducts(String id) async {
       products.clear();
       await productService.getProductsfilter(id);
@@ -129,7 +122,7 @@ class _UserFormState extends State<_UserForm> {
         Container(
           width: 300.0,
           child: DropdownButtonFormField(
-            icon: Icon(Icons.keyboard_double_arrow_down_rounded),
+            icon: const Icon(Icons.keyboard_double_arrow_down_rounded),
             hint: const Text('Select a Category'),
             iconSize: 40,
             items: categories.map((e) {

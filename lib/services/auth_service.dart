@@ -4,10 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService extends ChangeNotifier {
-  final String _baseUrl = '172.20.10.5:8080';
+  final String _baseUrl = '192.168.1.41:8080';
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
-
+  List<dynamic> Favs = [];
   readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
@@ -57,7 +57,7 @@ class AuthService extends ChangeNotifier {
     final Map<String, dynamic> authData = {'user': user, 'password': password};
 
     var request = http.MultipartRequest(
-        'POST', Uri.parse('http://172.20.10.5:8080/login'));
+        'POST', Uri.parse('http://192.168.1.41:8080/login'));
 
     request.fields['user'] = user;
     request.fields['password'] = password;
@@ -71,11 +71,12 @@ class AuthService extends ChangeNotifier {
       });
 
       final Map<String, dynamic> decodedResp = json.decode(values);
-      print(decodedResp);
 
       await storage.write(key: 'token', value: decodedResp['token']);
       await storage.write(key: 'id', value: decodedResp['id'].toString());
-      await storage.write(key: 'listFav', value: decodedResp['listFav']);
+      await storage.write(key: 'listFavs', value: decodedResp['listFavs'].toString());
+      List<dynamic> list = decodedResp['listFavs'];
+      Favs = list;
       return decodedResp['role'] +
           ',' +
           response.statusCode.toString() +
