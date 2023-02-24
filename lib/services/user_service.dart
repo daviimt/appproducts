@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class UserService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.40:8080';
+  final String _baseUrl = '172.20.10.5:8080';
   bool isLoading = true;
   final List<User> usuarios = [];
   String usuario = "";

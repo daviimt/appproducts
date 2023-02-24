@@ -11,13 +11,14 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '172.20.10.5:8080';
   bool isLoading = true;
   List<Product> productos = [];
   String producto = "";
   final storage = const FlutterSecureStorage();
 
   getProductsfilter(String id) async {
+    productos.clear();
     String? token = await AuthService().readToken();
 
     final url = Uri.http(_baseUrl, 'api/user/categories/$id/products');
@@ -44,6 +45,8 @@ class ProductService extends ChangeNotifier {
     productos = productList;
     isLoading = false;
     notifyListeners();
+    print(productos);
+
     return productos;
   }
 
@@ -87,6 +90,7 @@ class ProductService extends ChangeNotifier {
 
     isLoading = false;
     notifyListeners();
+    print(productos);
     return categoryList;
   }
 }

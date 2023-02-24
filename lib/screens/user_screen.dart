@@ -59,9 +59,11 @@ class _UserFormState extends State<_UserForm> {
   List<Product> products = [];
   List<Category> categories = [];
   List<bool> isChecked = [];
+  List<int> listFavs = [];
+
   final categoryService = CategoryService();
+  final authService = AuthService();
   final productService = ProductService();
-  String? company_id = "";
   final userservice = UserService();
 
   List<Product> productos = [];
@@ -70,6 +72,18 @@ class _UserFormState extends State<_UserForm> {
     await categoryService.getCategories();
     setState(() {
       categories = categoryService.categorias;
+    });
+  }
+
+  Future<void> getListFav() async {
+    Future<dynamic> futureData = authService.readListFav();
+    List<int> intList = await futureData.then((data) {
+      List<int> resultList = List<int>.from(data);
+      return resultList.toList();
+    });
+    setState(() {
+      listFavs = intList;
+      print(intList);
     });
   }
 
@@ -88,6 +102,7 @@ class _UserFormState extends State<_UserForm> {
     super.initState();
     getCategories();
     getAllProducts();
+    getListFav();
   }
 
   @override

@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class CategoryService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '172.20.10.5:8080';
   bool isLoading = true;
   List<Category> categorias = [];
   String categoria = "";
