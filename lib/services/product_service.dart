@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.41:8080';
   bool isLoading = true;
   List<Product> productos = [];
   String producto = "";
@@ -101,7 +101,8 @@ class ProductService extends ChangeNotifier {
       headers: {"Authorization": "Bearer $token"},
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-
+    print("DECODED RESP: " );
+    print(decodedResp);
     Product product = Product(
       id: decodedResp['id'],
       name: decodedResp['name'],
@@ -109,7 +110,10 @@ class ProductService extends ChangeNotifier {
       idCategory: decodedResp['idCategory'],
       price: decodedResp['price'],
     );
+    print("productos");
+    print(product.id);
     p = product;
+    print(p);
     isLoading = false;
     notifyListeners();
     return product;
