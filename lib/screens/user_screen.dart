@@ -79,7 +79,7 @@ class _UserFormState extends State<_UserForm> {
     Future<dynamic> futureData = authService.readListFav();
     List<int> intList = await futureData.then((data) {
       List<int> resultList = List<int>.from(data);
-      return resultList.toList();
+      return resultList;
     });
     setState(() {
       listFavs = intList;
