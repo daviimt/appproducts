@@ -114,6 +114,14 @@ class _UserFormState extends State<_UserForm> {
       });
     }
 
+    getCheck(int id, int index) {
+      if (listFavs.contains(products[index].id)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return Column(
       children: [
         const SizedBox(
@@ -173,7 +181,7 @@ class _UserFormState extends State<_UserForm> {
                           Checkbox(
                             shape: StarBorder(),
                             checkColor: Colors.black,
-                            value: isChecked[index],
+                            value: getCheck(products[index].id!, index),
                             onChanged: (bool? value) {
                               setState(() {
                                 isChecked[index] = value!;
