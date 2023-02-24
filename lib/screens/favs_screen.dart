@@ -22,7 +22,7 @@ class _FavsScreenState extends State<FavsScreen> {
     setState(() {
       favs = Provider.of<AuthService>(context, listen: false).Favs;
       for (var i in favs) {
-        products.add(ProductService().getProduct(i));
+        products.add(ProductService().getProduct(i.toString()));
       }
     });
   }

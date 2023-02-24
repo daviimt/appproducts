@@ -1,15 +1,10 @@
-import 'dart:ffi';
-import 'dart:io';
-import 'dart:math';
 import 'package:appproducts/models/models.dart';
 
 import 'package:intl/intl.dart';
 
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:intl/intl.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import '../providers/register_form_provider.dart';
 import '../services/services.dart';
@@ -22,14 +17,21 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
-        leading: IconButton(
-          icon: const Icon(Icons.login_outlined),
-          onPressed: () {
-            Provider.of<AuthService>(context, listen: false).logout();
-            Navigator.pushReplacementNamed(context, 'login');
-          },
-        ),
+        title: const Text('Lista de Productos'),
+        leading:
+           IconButton(
+            icon: const Icon(Icons.login_outlined),
+            onPressed: () {
+              Provider.of<AuthService>(context, listen: false).logout();
+              Navigator.pushReplacementNamed(context, 'login');
+            },
+          ),
+        actions: [IconButton(
+            icon: const Icon(Icons.favorite),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, 'favs_screen');
+            },
+          ),],
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,

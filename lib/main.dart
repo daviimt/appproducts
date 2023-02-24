@@ -1,3 +1,4 @@
+import 'package:appproducts/screens/favs_screen.dart';
 import 'package:appproducts/services/user_service.dart';
 import 'package:flutter/material.dart';
 import 'screens/screens.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
           'register': (_) => RegisterScreen(),
           'userscreen': (_) => UserScreen(),
           'adminscreen': (_) => AdminScreen(),
+          'favs_screen': (_) => FavsScreen(),
         });
   }
 }

@@ -1,17 +1,12 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
-
 import 'package:appproducts/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:http/http.dart' as http;
-
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.41:8080';
   bool isLoading = true;
   List<Product> productos = [];
   String producto = "";
@@ -45,7 +40,6 @@ class ProductService extends ChangeNotifier {
     productos = productList;
     isLoading = false;
     notifyListeners();
-    print(productos);
 
     return productos;
   }
@@ -92,5 +86,25 @@ class ProductService extends ChangeNotifier {
     notifyListeners();
     print(productos);
     return categoryList;
+  }
+
+  getProduct(String id) async {
+    String? token = await AuthService().readToken();
+
+    final url = Uri.http(_baseUrl, '/api/admin/products/$id');
+
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    final Map<String, dynamic> decodedResp = json.decode(resp.body);
+
+    Product product = Product.fromJson(decodedResp);
+    
+    isLoading = false;
+    notifyListeners();
+    return product;
   }
 }
