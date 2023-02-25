@@ -6,10 +6,11 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.41:8080';
   bool isLoading = true;
   List<Product> productos = [];
   List<int> listFavs = [];
+  List<Product> listProductosFav =  [];
   String producto = "";
   Product p = Product();
   final storage = const FlutterSecureStorage();
@@ -138,4 +139,28 @@ class ProductService extends ChangeNotifier {
 
     return listFavs;
   }
+
+  
+ Future<List> getListProductosFav() async {
+    listProductosFav.clear();
+    List<dynamic> favs = await getListFavs();
+    isLoading = true;
+    notifyListeners();
+    print("Lista de favoritos");
+    print(favs);
+
+    for(var i in favs) {
+      listProductosFav.add(await getProduct(i.toString()));
+      print("GET producto Favorito: ");
+      print(await getProduct(i.toString()));
+    }
+    print("Lista de productos favoritos");
+    print(listProductosFav);
+    isLoading = false;
+    notifyListeners();
+    
+    return listProductosFav;
+  }
+
+  
 }
