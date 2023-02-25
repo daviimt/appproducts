@@ -48,7 +48,7 @@ class CategoryService extends ChangeNotifier {
   Future deleteCategory(String id) async {
     final url = Uri.http(_baseUrl, '/api/admin/categories/$id');
     String? token = await AuthService().readToken();
-    print(url);
+
     isLoading = true;
     notifyListeners();
     final resp = await http.delete(
@@ -59,9 +59,6 @@ class CategoryService extends ChangeNotifier {
 
   Future updateCategory(String id, String name, String description) async {
     String? token = await AuthService().readToken();
-    print(id);
-    print(name);
-    print(description);
 
     isLoading = true;
     notifyListeners();

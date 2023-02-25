@@ -18,20 +18,21 @@ class UserScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Productos'),
-        leading:
-           IconButton(
-            icon: const Icon(Icons.login_outlined),
-            onPressed: () {
-              Provider.of<AuthService>(context, listen: false).logout();
-              Navigator.pushReplacementNamed(context, 'login');
-            },
-          ),
-        actions: [IconButton(
+        leading: IconButton(
+          icon: const Icon(Icons.login_outlined),
+          onPressed: () {
+            Provider.of<AuthService>(context, listen: false).logout();
+            Navigator.pushReplacementNamed(context, 'login');
+          },
+        ),
+        actions: [
+          IconButton(
             icon: const Icon(Icons.favorite),
             onPressed: () {
               Navigator.pushReplacementNamed(context, 'favs_screen');
             },
-          ),],
+          ),
+        ],
       ),
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -70,6 +71,17 @@ class _UserFormState extends State<_UserForm> {
 
   List<Product> productos = [];
 
+  // Future refresh() async {
+  //   final authService = await Provider.of<AuthService>(context, listen: false);
+  //   authService.login(authService.usernameGlobal, authService.passwordGlobal);
+  //   final authService2 = await Provider.of<AuthService>(context, listen: false);
+  //   print(authService2.usernameGlobal);
+  //   print(authService2.passwordGlobal);
+  //   setState(() {
+  //     listFavs = authService2.Favs;
+  //   });
+  // }
+
   Future getCategories() async {
     await categoryService.getCategories();
     setState(() {
@@ -78,6 +90,7 @@ class _UserFormState extends State<_UserForm> {
   }
 
   Future<void> getListFav() async {
+    authService.login(authService.usernameGlobal, authService.passwordGlobal);
     setState(() {
       listFavs = Provider.of<AuthService>(context, listen: false).Favs;
       print('AQUI ESTOY');
@@ -190,9 +203,10 @@ class _UserFormState extends State<_UserForm> {
                                 if (isChecked[index]) {
                                   productService
                                       .addFav(products[index].id.toString());
-                                  getAllProducts();
-                                  getListFav();
                                 }
+                                getListFav();
+                                Navigator.pushReplacementNamed(
+                                    context, 'userscreen');
                               });
                             },
                           ),

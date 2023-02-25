@@ -6,9 +6,10 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.41:8080';
+  final String _baseUrl = '192.168.1.28:8080';
   bool isLoading = true;
   List<Product> productos = [];
+  List<int> listFavs = [];
   String producto = "";
   Product p = Product();
   final storage = const FlutterSecureStorage();
@@ -60,7 +61,6 @@ class ProductService extends ChangeNotifier {
   }
 
   Future<List> getListProducts() async {
-    print("Entrando");
     productos.clear();
     isLoading = true;
     notifyListeners();
@@ -85,7 +85,7 @@ class ProductService extends ChangeNotifier {
 
     isLoading = false;
     notifyListeners();
-    print(productos);
+
     return categoryList;
   }
 
@@ -101,8 +101,7 @@ class ProductService extends ChangeNotifier {
       headers: {"Authorization": "Bearer $token"},
     );
     final Map<String, dynamic> decodedResp = json.decode(resp.body);
-    print("DECODED RESP: " );
-    print(decodedResp);
+
     Product product = Product(
       id: decodedResp['id'],
       name: decodedResp['name'],
@@ -110,12 +109,33 @@ class ProductService extends ChangeNotifier {
       idCategory: decodedResp['idCategory'],
       price: decodedResp['price'],
     );
-    print("productos");
-    print(product.id);
+
     p = product;
-    print(p);
+
     isLoading = false;
     notifyListeners();
     return product;
+  }
+
+  Future<List> getListFavs() async {
+    listFavs.clear();
+    isLoading = true;
+    notifyListeners();
+    final url = Uri.http(_baseUrl, '/api/user/getFavs');
+    String? token = await AuthService().readToken();
+
+    final resp = await http.get(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    final List<dynamic> decodedResp = json.decode(resp.body);
+
+    print(decodedResp);
+    // listFavs = categoryList;
+
+    isLoading = false;
+    notifyListeners();
+
+    return listFavs;
   }
 }

@@ -8,6 +8,9 @@ class AuthService extends ChangeNotifier {
   final storage = const FlutterSecureStorage();
   bool isLoading = true;
   List<dynamic> Favs = [];
+  String passwordGlobal = '';
+  String usernameGlobal = '';
+
   readToken() async {
     return await storage.read(key: 'token') ?? '';
   }
@@ -47,7 +50,6 @@ class AuthService extends ChangeNotifier {
 
       return (resp.statusCode.toString());
     } else {
-      print('Error al enviar la solicitud');
       return (resp.statusCode.toString());
     }
   }
@@ -55,7 +57,8 @@ class AuthService extends ChangeNotifier {
 //LOGINS
   Future<String?> login(String user, String password) async {
     final Map<String, dynamic> authData = {'user': user, 'password': password};
-
+    usernameGlobal = user;
+    passwordGlobal = password;
     var request = http.MultipartRequest(
         'POST', Uri.parse('http://192.168.1.28:8080/login'));
 
@@ -76,8 +79,12 @@ class AuthService extends ChangeNotifier {
       await storage.write(key: 'id', value: decodedResp['id'].toString());
       await storage.write(
           key: 'listFavs', value: decodedResp['listFavs'].toString());
+
       List<dynamic> list = decodedResp['listFavs'];
       Favs = list;
+      // print('lsita login');
+      // print(Favs);
+      // print(response.statusCode.toInt());
       return decodedResp['role'] +
           ',' +
           response.statusCode.toString() +
