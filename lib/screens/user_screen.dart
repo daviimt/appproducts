@@ -17,6 +17,7 @@ class UserScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
         title: const Text('Lista de Productos'),
         leading: IconButton(
           icon: const Icon(Icons.login_outlined),
