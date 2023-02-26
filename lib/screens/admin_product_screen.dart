@@ -300,6 +300,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                                 price);
                                             getProducts();
                                             Navigator.pop(context);
+                                            getProducts();
                                           },
                                           child: new Text("OK"))
                                     ],
