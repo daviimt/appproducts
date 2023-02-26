@@ -169,6 +169,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             productService.create(name, description, price, id);
                             getProducts();
                             Navigator.pop(context);
+                            getProducts();
                           },
                           child: new Text("OK"))
                     ],
@@ -205,8 +206,6 @@ class _ProductScreenState extends State<ProductScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('${productos[index].id}',
-                          style: const TextStyle(fontSize: 20)),
                       Text(
                         productos[index].name!,
                         style: const TextStyle(fontSize: 20),
@@ -219,6 +218,8 @@ class _ProductScreenState extends State<ProductScreen> {
                         'Price : ${productos[index].price}',
                         style: const TextStyle(fontSize: 20),
                       ),
+                      Text('${productos[index].id}',
+                          style: const TextStyle(fontSize: 20)),
                     ],
                   ),
                 ),

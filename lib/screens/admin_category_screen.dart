@@ -240,6 +240,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                             );
                                             getCategories();
                                             Navigator.pop(context);
+                                            getCategories();
                                           },
                                           child: new Text("OK"))
                                     ],
