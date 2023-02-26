@@ -22,11 +22,8 @@ class _FavsScreenState extends State<FavsScreen> {
     List<dynamic> favs = await productService.getListFavs();
     List<Product> list = productService.productos;
     List<Product> listFav = [];
-    print('for;');
     for (int i = 0; i < list.length; i++) {
-      print(list[i].id);
       if (favs.contains(list[i].id)) {
-        print("ENTRA");
         listFav.add(list[i]);
       }
     }

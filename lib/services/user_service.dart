@@ -1,17 +1,12 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
-
 import 'package:appproducts/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import 'package:http/http.dart' as http;
-
 import 'services.dart';
 
 class UserService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.42:8080';
   bool isLoading = true;
   final List<User> usuarios = [];
   String usuario = "";

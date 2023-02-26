@@ -110,7 +110,6 @@ class _LoginForm extends StatelessWidget {
                             loginForm.username, loginForm.password);
 
                         final spliter = data?.split(',');
-                        // print(spliter?[1]);
 
                         if (spliter?[1] == '200') {
                           if (spliter?[2] == 'false') {

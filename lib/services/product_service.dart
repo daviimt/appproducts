@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.28:8080';
+  final String _baseUrl = '192.168.1.42:8080';
   bool isLoading = true;
   List<Product> productos = [];
   List<int> listFavs = [];
@@ -142,16 +142,10 @@ class ProductService extends ChangeNotifier {
     List<dynamic> favs = await getListFavs();
     isLoading = true;
     notifyListeners();
-    print("Lista de favoritos");
-    print(favs);
 
     for (var i in favs) {
       listProductosFav.add(await getProduct(i.toString()));
-      print("GET producto Favorito: ");
-      print(await getProduct(i.toString()));
     }
-    print("Lista de productos favoritos");
-    print(listProductosFav);
     isLoading = false;
     notifyListeners();
 
@@ -167,7 +161,6 @@ class ProductService extends ChangeNotifier {
       url,
       headers: {"Authorization": "Bearer $token"},
     );
-    print(resp.statusCode);
     if (resp.statusCode == 200) {}
   }
 
@@ -185,7 +178,6 @@ class ProductService extends ChangeNotifier {
     );
     isLoading = false;
     notifyListeners();
-    print(resp.statusCode);
     if (resp.statusCode == 200) {}
   }
 
@@ -203,8 +195,6 @@ class ProductService extends ChangeNotifier {
       'description': description,
       'price': price,
     };
-    print(productData);
-    print(json.encode(productData));
     isLoading = false;
     notifyListeners();
 
@@ -220,8 +210,6 @@ class ProductService extends ChangeNotifier {
     );
     isLoading = false;
     notifyListeners();
-
-    print(resp.statusCode);
 
     if (resp.statusCode == 200) {}
   }
@@ -241,8 +229,6 @@ class ProductService extends ChangeNotifier {
       'price': price,
       'idCategory': idCategory,
     };
-    print(productData);
-    print(json.encode(productData));
 
     final url = Uri.http(_baseUrl, '/api/admin/categories/$idCategory/product');
 
@@ -256,7 +242,6 @@ class ProductService extends ChangeNotifier {
     );
     isLoading = false;
     notifyListeners();
-    print(resp.statusCode);
 
     if (resp.statusCode == 200) {}
   }
