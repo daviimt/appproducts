@@ -13,14 +13,25 @@ class FavsScreen extends StatefulWidget {
 class _FavsScreenState extends State<FavsScreen> {
   final authService = AuthService();
   final productService = ProductService();
-  List<dynamic> favs = [];
+
   List<Product> productosFav = [];
-  
+
   Future<void> getListFav() async {
-  productosFav.clear();
+    productosFav.clear();
     await productService.getListProducts();
+    List<dynamic> favs = await productService.getListFavs();
+    List<Product> list = productService.productos;
+    List<Product> listFav = [];
+    print('for;');
+    for (int i = 0; i < list.length; i++) {
+      print(list[i].id);
+      if (favs.contains(list[i].id)) {
+        print("ENTRA");
+        listFav.add(list[i]);
+      }
+    }
     setState(() {
-      productosFav = productService.productos;
+      productosFav = listFav;
     });
   }
 
@@ -33,14 +44,16 @@ class _FavsScreenState extends State<FavsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Lista de Favoritos'),
-      backgroundColor: Colors.deepPurple,
-      leading: IconButton(
+      appBar: AppBar(
+        title: const Text('Lista de Favoritos'),
+        backgroundColor: Colors.deepPurple,
+        leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.pushReplacementNamed(context, 'userscreen');
           },
-        ),),
+        ),
+      ),
       //Sombra debajo del appbar
       body: ListView.separated(
         itemCount: productosFav.length,
@@ -50,10 +63,14 @@ class _FavsScreenState extends State<FavsScreen> {
               size: 30,
             ),
             contentPadding: const EdgeInsets.all(16),
-            title: Text(productosFav[index].name!,style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-            subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+            title: Text(
+              productosFav[index].name!,
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height:2),
+                SizedBox(height: 2),
                 Text('Descripción: ' + productosFav[index].description!),
                 Text('Precio: ' + productosFav[index].price.toString())
               ],
@@ -62,5 +79,4 @@ class _FavsScreenState extends State<FavsScreen> {
       ),
     );
   }
-
 }

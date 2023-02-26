@@ -91,11 +91,9 @@ class _UserFormState extends State<_UserForm> {
   }
 
   Future<void> getListFav() async {
-    authService.login(authService.usernameGlobal, authService.passwordGlobal);
+    List<dynamic> list = await productService.getListFavs();
     setState(() {
-      listFavs = Provider.of<AuthService>(context, listen: false).Favs;
-      print('AQUI ESTOY');
-      print(listFavs);
+      listFavs = list;
     });
   }
 
@@ -204,10 +202,12 @@ class _UserFormState extends State<_UserForm> {
                                 if (isChecked[index]) {
                                   productService
                                       .addFav(products[index].id.toString());
+                                  getListFav();
+                                } else {
+                                  productService
+                                      .delFav(products[index].id.toString());
+                                  getListFav();
                                 }
-                                getListFav();
-                                Navigator.pushReplacementNamed(
-                                    context, 'userscreen');
                               });
                             },
                           ),

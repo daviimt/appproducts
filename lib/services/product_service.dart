@@ -6,11 +6,11 @@ import 'package:http/http.dart' as http;
 import 'services.dart';
 
 class ProductService extends ChangeNotifier {
-  final String _baseUrl = '192.168.1.41:8080';
+  final String _baseUrl = '192.168.1.28:8080';
   bool isLoading = true;
   List<Product> productos = [];
   List<int> listFavs = [];
-  List<Product> listProductosFav =  [];
+  List<Product> listProductosFav = [];
   String producto = "";
   Product p = Product();
   final storage = const FlutterSecureStorage();
@@ -118,7 +118,7 @@ class ProductService extends ChangeNotifier {
     return product;
   }
 
-  Future<List> getListFavs() async {
+  Future<dynamic> getListFavs() async {
     listFavs.clear();
     isLoading = true;
     notifyListeners();
@@ -131,17 +131,13 @@ class ProductService extends ChangeNotifier {
     );
     final List<dynamic> decodedResp = json.decode(resp.body);
 
-    print(decodedResp);
-    // listFavs = categoryList;
-
     isLoading = false;
     notifyListeners();
 
-    return listFavs;
+    return decodedResp;
   }
 
-  
- Future<List> getListProductosFav() async {
+  Future<List> getListProductosFav() async {
     listProductosFav.clear();
     List<dynamic> favs = await getListFavs();
     isLoading = true;
@@ -149,7 +145,7 @@ class ProductService extends ChangeNotifier {
     print("Lista de favoritos");
     print(favs);
 
-    for(var i in favs) {
+    for (var i in favs) {
       listProductosFav.add(await getProduct(i.toString()));
       print("GET producto Favorito: ");
       print(await getProduct(i.toString()));
@@ -158,9 +154,20 @@ class ProductService extends ChangeNotifier {
     print(listProductosFav);
     isLoading = false;
     notifyListeners();
-    
+
     return listProductosFav;
   }
 
-  
+  Future delFav(String id) async {
+    String? token = await AuthService().readToken();
+    isLoading = true;
+    notifyListeners();
+    final url = Uri.http(_baseUrl, '/api/user/deleteFav/$id');
+    final resp = await http.put(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    print(resp.statusCode);
+    if (resp.statusCode == 200) {}
+  }
 }
