@@ -207,6 +207,7 @@ class _UserFormState extends State<_UserForm> {
                                       .delFav(products[index].id.toString());
                                   getListFav();
                                 }
+                                getListFav();
                               });
                             },
                           ),
