@@ -60,7 +60,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
+        title: const Text('Productos'),
         centerTitle: true,
         backgroundColor: Colors.deepPurple,
         leading: IconButton(
@@ -74,9 +74,9 @@ class _ProductScreenState extends State<ProductScreen> {
       body: builListView(context, productos),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Categories'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Categorias'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined), label: 'Products'),
+              icon: Icon(Icons.shopping_cart_outlined), label: 'Productos'),
         ],
         currentIndex: 1, //New
         onTap: _onItemTapped,
@@ -92,7 +92,7 @@ class _ProductScreenState extends State<ProductScreen> {
             builder: (BuildContext context) {
               // return object of type Dialog
               return AlertDialog(
-                title: const Text("Create Product"),
+                title: const Text("Crear Producto"),
                 content: SizedBox(
                   height: 230,
                   child: Column(
@@ -105,7 +105,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           });
                         },
                         keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(hintText: 'Name'),
+                        decoration: const InputDecoration(hintText: 'Nombre'),
                       ),
                       TextFormField(
                         initialValue: description,
@@ -116,7 +116,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         },
                         keyboardType: TextInputType.text,
                         decoration:
-                            const InputDecoration(hintText: 'Description'),
+                            const InputDecoration(hintText: 'Descripcion'),
                       ),
                       TextFormField(
                         initialValue: price,
@@ -126,13 +126,13 @@ class _ProductScreenState extends State<ProductScreen> {
                           });
                         },
                         keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(hintText: 'Price'),
+                        decoration: const InputDecoration(hintText: 'Precio'),
                       ),
                       Container(
                         width: 300.0,
                         child: DropdownButtonFormField(
                           icon: Icon(Icons.keyboard_double_arrow_down_rounded),
-                          hint: const Text('Select a Category'),
+                          hint: const Text('Selecciona una categoria'),
                           iconSize: 40,
                           items: categories.map((e) {
                             return DropdownMenuItem(
@@ -146,7 +146,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           validator: (value) {
                             return (value != null && value != 0)
                                 ? null
-                                : 'Select Category';
+                                : 'Selecciona Categoria';
                           },
                         ),
                       ),
@@ -158,7 +158,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   Row(
                     children: <Widget>[
                       TextButton(
-                        child: new Text("Cancel"),
+                        child: new Text("Cancelar"),
                         onPressed: () {
                           setState(() {});
                           Navigator.of(context).pop();
@@ -215,7 +215,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         style: const TextStyle(fontSize: 20),
                       ),
                       Text(
-                        'Price : ${productos[index].price}',
+                        'Precio : ${productos[index].price}',
                         style: const TextStyle(fontSize: 20),
                       ),
                       Text('${productos[index].id}',
@@ -239,7 +239,7 @@ class _ProductScreenState extends State<ProductScreen> {
                             builder: (BuildContext context) {
                               // return object of type Dialog
                               return AlertDialog(
-                                title: const Text("Modify Product"),
+                                title: const Text("Modificar Producto"),
                                 content: SizedBox(
                                   height: 150,
                                   child: Column(
@@ -253,7 +253,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         },
                                         keyboardType: TextInputType.text,
                                         decoration: const InputDecoration(
-                                            hintText: 'Name'),
+                                            hintText: 'Nombre'),
                                       ),
                                       TextFormField(
                                         initialValue: description,
@@ -264,7 +264,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         },
                                         keyboardType: TextInputType.text,
                                         decoration: const InputDecoration(
-                                            hintText: 'Description'),
+                                            hintText: 'Descripcion'),
                                       ),
                                       TextFormField(
                                         initialValue: price,
@@ -275,7 +275,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         },
                                         keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
-                                            hintText: 'Price'),
+                                            hintText: 'Precio'),
                                       ),
                                     ],
                                   ),
@@ -285,7 +285,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                   Row(
                                     children: <Widget>[
                                       TextButton(
-                                        child: new Text("Cancel"),
+                                        child: new Text("Cancelar"),
                                         onPressed: () {
                                           setState(() {});
                                           Navigator.of(context).pop();
@@ -322,8 +322,8 @@ class _ProductScreenState extends State<ProductScreen> {
                           showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Delete Product'),
-                              content: const Text('Are you sure?'),
+                              title: const Text('Eliminar Producto'),
+                              content: const Text('¿Estas seguro?'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -341,7 +341,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                     });
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Yes'),
+                                  child: const Text('Si'),
                                 ),
                               ],
                             ),

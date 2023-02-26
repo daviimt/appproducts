@@ -72,17 +72,6 @@ class _UserFormState extends State<_UserForm> {
 
   List<Product> productos = [];
 
-  // Future refresh() async {
-  //   final authService = await Provider.of<AuthService>(context, listen: false);
-  //   authService.login(authService.usernameGlobal, authService.passwordGlobal);
-  //   final authService2 = await Provider.of<AuthService>(context, listen: false);
-  //   print(authService2.usernameGlobal);
-  //   print(authService2.passwordGlobal);
-  //   setState(() {
-  //     listFavs = authService2.Favs;
-  //   });
-  // }
-
   Future getCategories() async {
     await categoryService.getCategories();
     setState(() {
@@ -147,15 +136,25 @@ class _UserFormState extends State<_UserForm> {
             icon: const Icon(Icons.keyboard_double_arrow_down_rounded),
             hint: const Text('Select a Category'),
             iconSize: 40,
-            items: categories.map((e) {
-              return DropdownMenuItem(
-                value: e.id,
-                child: Text(e.name.toString()),
-              );
-            }).toList(),
+            items: [
+              DropdownMenuItem(
+                value: 0,
+                child: Text('Todos los Productos'),
+              ),
+              ...categories.map((e) {
+                return DropdownMenuItem(
+                  value: e.id,
+                  child: Text(e.name.toString()),
+                );
+              }).toList(),
+            ],
             onChanged: (value) {
               buttonState = true;
-              getProducts(value.toString());
+              if (value == 0) {
+                getAllProducts();
+              } else {
+                getProducts(value.toString());
+              }
             },
             validator: (value) {
               return (value != null && value != 0) ? null : 'Select Category';

@@ -47,7 +47,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: const Text('Categorias'),
         backgroundColor: Colors.deepPurple,
         centerTitle: true,
         leading: IconButton(
@@ -65,9 +65,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
           : builListView(context, categories),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Categories'),
+          BottomNavigationBarItem(icon: Icon(Icons.list), label: 'Categorias'),
           BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined), label: 'Products'),
+              icon: Icon(Icons.shopping_cart_outlined), label: 'Productos'),
         ],
         currentIndex: 0, //New
         onTap: _onItemTapped,
@@ -81,7 +81,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
             builder: (BuildContext context) {
               // return object of type Dialog
               return AlertDialog(
-                title: const Text("Create Category"),
+                title: const Text("Crear Categoria"),
                 content: SizedBox(
                   height: 230,
                   child: Column(
@@ -94,7 +94,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           });
                         },
                         keyboardType: TextInputType.text,
-                        decoration: const InputDecoration(hintText: 'Name'),
+                        decoration: const InputDecoration(hintText: 'Nombre'),
                       ),
                       TextFormField(
                         initialValue: description,
@@ -105,7 +105,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         },
                         keyboardType: TextInputType.text,
                         decoration:
-                            const InputDecoration(hintText: 'Description'),
+                            const InputDecoration(hintText: 'Descripcion'),
                       ),
                     ],
                   ),
@@ -115,7 +115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   Row(
                     children: <Widget>[
                       TextButton(
-                        child: new Text("Cancel"),
+                        child: new Text("Cancelar"),
                         onPressed: () {
                           setState(() {});
                           Navigator.of(context).pop();
@@ -126,6 +126,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             categoryService.createCategory(name, description);
                             getCategories();
                             Navigator.pop(context);
+                            getCategories();
                           },
                           child: new Text("OK"))
                     ],
@@ -190,7 +191,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             builder: (BuildContext context) {
                               // return object of type Dialog
                               return AlertDialog(
-                                title: const Text("Modify Category"),
+                                title: const Text("Modificar categoria"),
                                 content: SizedBox(
                                   height: 150,
                                   child: Column(
@@ -204,7 +205,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         },
                                         keyboardType: TextInputType.text,
                                         decoration: const InputDecoration(
-                                            hintText: 'Name'),
+                                            hintText: 'Nombre'),
                                       ),
                                       TextFormField(
                                         initialValue: description,
@@ -215,7 +216,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         },
                                         keyboardType: TextInputType.text,
                                         decoration: const InputDecoration(
-                                            hintText: 'Description'),
+                                            hintText: 'Descripcion'),
                                       ),
                                     ],
                                   ),
@@ -225,7 +226,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   Row(
                                     children: <Widget>[
                                       TextButton(
-                                        child: new Text("Cancel"),
+                                        child: new Text("Cancelar"),
                                         onPressed: () {
                                           setState(() {});
                                           Navigator.of(context).pop();
@@ -262,8 +263,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
-                              title: const Text('Delete Category'),
-                              content: const Text('Are you sure?'),
+                              title: const Text('Eliminar Categoria'),
+                              content: const Text('¿Estas seguro?'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -278,7 +279,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                     getCategories();
                                     Navigator.pop(context);
                                   },
-                                  child: const Text('Yes'),
+                                  child: const Text('Si'),
                                 ),
                               ],
                             ),
