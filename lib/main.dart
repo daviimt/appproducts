@@ -45,7 +45,8 @@ class MyApp extends StatelessWidget {
           'login': (_) => LoginScreen(),
           'register': (_) => RegisterScreen(),
           'userscreen': (_) => UserScreen(),
-          'adminscreen': (_) => AdminScreen(),
+          'admincategoryscreen': (_) => CategoryScreen(),
+          'adminproductsscreen': (_) => ProductScreen(),
           'favs_screen': (_) => FavsScreen(),
         });
   }

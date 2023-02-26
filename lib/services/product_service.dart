@@ -170,4 +170,94 @@ class ProductService extends ChangeNotifier {
     print(resp.statusCode);
     if (resp.statusCode == 200) {}
   }
+
+  deleteProduct(String id) async {
+    String? token = await AuthService().readToken();
+
+    isLoading = true;
+    notifyListeners();
+
+    final url = Uri.http(_baseUrl, '/api/admin/products/$id');
+
+    final resp = await http.delete(
+      url,
+      headers: {"Authorization": "Bearer $token"},
+    );
+    isLoading = false;
+    notifyListeners();
+    print(resp.statusCode);
+    if (resp.statusCode == 200) {}
+  }
+
+  Future modify(
+    int id,
+    String name,
+    String description,
+    String price,
+  ) async {
+    String? token = await AuthService().readToken();
+    isLoading = true;
+    notifyListeners();
+    final Map<String, dynamic> productData = {
+      'name': name,
+      'description': description,
+      'price': price,
+    };
+    print(productData);
+    print(json.encode(productData));
+    isLoading = false;
+    notifyListeners();
+
+    final url = Uri.http(_baseUrl, '/api/admin/products/$id');
+
+    final resp = await http.put(
+      url,
+      headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+      body: json.encode(productData),
+    );
+    isLoading = false;
+    notifyListeners();
+
+    print(resp.statusCode);
+
+    if (resp.statusCode == 200) {}
+  }
+
+  Future create(
+    String name,
+    String description,
+    String price,
+    int idCategory,
+  ) async {
+    String? token = await AuthService().readToken();
+    isLoading = false;
+    notifyListeners();
+    final Map<String, dynamic> productData = {
+      'name': name,
+      'description': description,
+      'price': price,
+      'idCategory': idCategory,
+    };
+    print(productData);
+    print(json.encode(productData));
+
+    final url = Uri.http(_baseUrl, '/api/admin/categories/$idCategory/product');
+
+    final resp = await http.post(
+      url,
+      headers: {
+        "content-type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+      body: json.encode(productData),
+    );
+    isLoading = false;
+    notifyListeners();
+    print(resp.statusCode);
+
+    if (resp.statusCode == 200) {}
+  }
 }
